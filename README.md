@@ -1,16 +1,25 @@
 A readme that contains the following:
 * Introduction to your app
     * A man’s dress watch news/review site
+
+* site design reference
+  * https://www.timex.com
+  * https://www.tagheuer.com
+  * https://www.tiffany.com/watches/mens-watches
+  * https://www.chanel.com/us/watches
+  * https://www.prestigetime.com
+
 * Technologies to be used
     * react
     * ruby on rails
     * foreman
-    * cors-
+    * cors-rails
     * axios
     * postgrasql
     * html and css
     * react-router-dom
     * heroku
+
 * Feature list (aka user stories)
     * user starts on the Welcome page with enter button which links to the home page
     * on the home page the user can find  the:
@@ -65,19 +74,19 @@ A readme that contains the following:
     * Comment - belong_to User
         * title
         * text
-        * commenter - has_one User
+        * commenter - fk
             * Post MVP - has_many replies
-    * Articles - has_many Comments
+    * Articles - belong_to User, has_many Comments
         * title
         * sub_title
         * text
-        * author_id - belong_to User
-        * products_id - has_one Products
-    * products  - belong_to Brand
+        * author_id - fk
+        * products_id - fk
+    * products  - belong_to Brand has_many User
         * name
-        * brand
+        * brand - fk
         * details
-    * brands - has_ many Products
+    * brands - has_many Products
         * name
         * website
         * logo
@@ -85,17 +94,22 @@ A readme that contains the following:
         * Head Quarters
         * founded
         * founder
+
+
 * Wireframes
+![Wireframes](./doc_images/Wireframes.jpg)
+
+
 * M.V.P
     * user login/register
-    * user has a wishlist
     * user can update profile
     * user can delete profile
     * user can edit comments
     * view user profile
     * user comment on articles
-    * OAuth
+    * Auth
 * Post M.V.P features
+    * user has a wishlist
     * reply to comments
     * user block user
     * Admin can login
@@ -103,15 +117,8 @@ A readme that contains the following:
     * Admin can ban user
     * Admin can delete user comments
 * Post Post M.V.P features
-    *  welcome page shows real time on page
+    * OAuth - google
+    * welcome page shows real time on page
     * Add Editor tool to create and edit site for Admins
 * Code example
 * Installation instructions
-
-Deliverable
-* A Project proposal that should include
-    * A concise statement of the core functionality of your app.
-    * Any technologies you plan on using beyond rails and react.
-    * A timeline outlining when you plan on delivering each feature.
-    * Wireframes
-    * ERD
