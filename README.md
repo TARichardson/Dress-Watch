@@ -71,11 +71,16 @@ A readme that contains the following:
         * real_last_name
         * wishlist
             * Post MVP has_many replies
-    * Comment - belong_to User
+    * Comment - belong_to User, has_many Replies
         * title
         * text
         * commenter - fk
-            * Post MVP - has_many replies
+            * Post M.V.P - has_many replies
+    * Reply - belong_to Comment - Post M.V.P
+      * title
+      * text
+      * commenter_id
+      * comment_id
     * Articles - belong_to User, has_many Comments
         * title
         * sub_title
@@ -94,6 +99,7 @@ A readme that contains the following:
         * Head Quarters
         * founded
         * founder
+![EDR](./doc_images/EDR-Dress_Watch.jpeg.jpg)
 
 
 * Wireframes
