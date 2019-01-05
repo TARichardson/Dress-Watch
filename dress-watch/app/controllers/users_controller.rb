@@ -37,9 +37,10 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-
-    if @user.id == params[:id] || "admin" == user_params[:role]
+    if @user.id == params[:id]
       current_user.destroy
+    elsif "admin" == user_params[:role]
+       @user.destroy
     else
       render json: {msg: "you can't delete another user's profile."}
     end
