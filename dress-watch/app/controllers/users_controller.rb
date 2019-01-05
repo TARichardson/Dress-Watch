@@ -37,7 +37,12 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+
+    if @user.id == params[:id] || "admin" == user_params[:role]
+      current_user.destroy
+    else
+      render json: {msg: "you can't delete another user's profile."}
+    end
   end
 
   private
@@ -48,6 +53,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :user_name, :real_first_name, :real_last_name, :password, :password_confirmation)
+      params.require(:user).permit(:email, :user_name, :real_first_name, :real_last_name, :password, :password_confirmation, :role)
     end
 end
