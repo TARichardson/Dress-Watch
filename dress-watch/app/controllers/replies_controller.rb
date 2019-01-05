@@ -1,5 +1,6 @@
 class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :update, :destroy]
+  before_action :authenticate_user, only: [:create, :update, :destroy, :mine]
 
   # GET /replies
   def index
@@ -36,6 +37,12 @@ class RepliesController < ApplicationController
   # DELETE /replies/1
   def destroy
     @reply.destroy
+  end
+
+  # GET /replies/mine
+  def mine
+    @replies = current_user.replies
+    render json: @replies
   end
 
   private

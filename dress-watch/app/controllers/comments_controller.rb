@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
+  before_action :authenticate_user, only: [:create, :update, :destroy, :mine]
 
   # GET /comments
   def index
@@ -36,6 +37,12 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   def destroy
     @comment.destroy
+  end
+
+  # GET /comments/mine
+  def mine
+    @comments = current_user.comments
+    render json: @comments
   end
 
   private

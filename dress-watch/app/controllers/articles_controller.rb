@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :update, :destroy]
+  before_action :authenticate_user, only: [:create, :update, :destroy, :mine]
+
 
   # GET /articles
   def index
@@ -36,6 +38,12 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1
   def destroy
     @article.destroy
+  end
+
+  # GET /articles/mine
+  def mine
+    @articles = current_user.articles
+    render json: @articles
   end
 
   private
