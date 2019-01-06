@@ -1,5 +1,5 @@
-“./dress-watch/tmp/”
-"./dress-watch/log/"
-"./dress-watch/.bundle/"
-"./dress-watch/vendor/bundle/"
-“./dress-watch/client/node_modules/
+./dress-watch/tmp/
+./dress-watch/log/
+./dress-watch/.bundle/
+./dress-watch/vendor/bundle/
+./dress-watch/client/node_modules/
