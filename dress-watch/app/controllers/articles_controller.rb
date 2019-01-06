@@ -20,7 +20,8 @@ class ArticlesController < ApplicationController
     @article = current_user.articles.new(article_params)
     @article[:published_at] = Time.now
 
-    if @article.save
+    # statment should short circuit and the article won't be saved
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @article.save
      render json: @article, status: :created, location: @article
 
     else
@@ -31,16 +32,22 @@ class ArticlesController < ApplicationController
 
   # PATCH/PUT /articles/1
   def update
-    if @article.update(article_params)
+    # statment should short circuit and the article won't be update
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @article.update(article_params)
       render json: @article
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: @article.errors, status: :unauthorized
     end
   end
 
   # DELETE /articles/1
   def destroy
-    @article.destroy
+    # statment should short circuit and the article won't be destroy
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @article.destroy
+      render json: {msg: "deleted an article with id of #{@article.id}"}
+    else
+      render json: @article.errors, status: :unauthorized
+    end
   end
 
   # GET /articles/mine
@@ -57,6 +64,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def article_params
-      params.require(:article).permit(:title, :sub_title, :body, :published_at)
+      params.require(:article).permit(:title, :sub_title, :body, :published_at, :product_id)
     end
 end
