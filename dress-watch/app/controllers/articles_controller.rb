@@ -17,12 +17,15 @@ class ArticlesController < ApplicationController
 
   # POST /articles
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.new(article_params)
+    @article[:published_at] = Time.now
 
     if @article.save
-      render json: @article, status: :created, location: @article
+     render json: @article, status: :created, location: @article
+
     else
       render json: @article.errors, status: :unprocessable_entity
+
     end
   end
 
@@ -54,6 +57,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def article_params
-      params.require(:article).permit(:title, :sub_title, :body)
+      params.require(:article).permit(:title, :sub_title, :body, :published_at)
     end
 end
