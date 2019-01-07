@@ -12,7 +12,14 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1
   def show
-    render json: @article
+    @full_article_data = {
+      article: @article,
+      comments: @article.comments.map { | comment | {
+        comment: comment,
+        replies: Comment.includes(:replies).where(:id => comment.id)[0].replies}
+      }
+    }
+    render json: @full_article_data
   end
 
   # POST /articles
@@ -59,7 +66,7 @@ class ArticlesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.find(params[:id])
+      @article = Article.includes(:comments).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
