@@ -18,7 +18,7 @@ class BrandsController < ApplicationController
   def create
     @brand = Brand.new(brand_params)
 
-    if @brand.save
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @brand.save
       render json: @brand, status: :created, location: @brand
     else
       render json: @brand.errors, status: :unprocessable_entity
@@ -27,7 +27,8 @@ class BrandsController < ApplicationController
 
   # PATCH/PUT /brands/1
   def update
-    if @brand.update(brand_params)
+    # statment should short circuit and the brand won't be updated
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @brand.update(brand_params)
       render json: @brand
     else
       render json: @brand.errors, status: :unprocessable_entity
@@ -36,7 +37,12 @@ class BrandsController < ApplicationController
 
   # DELETE /brands/1
   def destroy
-    @brand.destroy
+    # statment should short circuit and the brand won't be destroy
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @brand.destroy
+      render json: {msg: "deleted an brand with id of #{@brand.id}"}
+    else
+      render json: @brand.errors, status: :unauthorized
+    end
   end
 
   private

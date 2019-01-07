@@ -27,7 +27,8 @@ class RepliesController < ApplicationController
 
   # PATCH/PUT /replies/1
   def update
-    if @reply.update(reply_params)
+    # statment should short circuit and the reply won't be updated
+    if (current_user[:role]== "admin" || current_user[:id] == @reply.user_id) && @reply.update(reply_params)
       render json: @reply
     else
       render json: @reply.errors, status: :unprocessable_entity
@@ -36,7 +37,12 @@ class RepliesController < ApplicationController
 
   # DELETE /replies/1
   def destroy
-    @reply.destroy
+    # statment should short circuit and the reply won't be destroy
+    if (current_user[:role]== "admin" || current_user[:id] == @reply.user_id) && @reply.destroy
+      render json: {msg: "deleted an reply with id of #{@reply.id}"}
+    else
+      render json: @reply.errors, status: :unauthorized
+    end
   end
 
   # GET /replies/mine
@@ -53,6 +59,6 @@ class RepliesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def reply_params
-      params.require(:reply).permit(:title, :body)
+      params.require(:reply).permit(:title, :body, :user_id, :comment_id, :published_at)
     end
 end

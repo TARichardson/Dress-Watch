@@ -27,7 +27,8 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1
   def update
-    if @comment.update(comment_params)
+    # statment should short circuit and the comment won't be updated
+    if (current_user[:role]== "admin" || current_user[:id] == @comment.user_id) && @comment.update(comment_params)
       render json: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
@@ -36,7 +37,12 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
+    # statment should short circuit and the comment won't be destroy
+    if (current_user[:role]== "admin" || current_user[:id] == @comment.user_id) && @comment.destroy
+      render json: {msg: "deleted an comment with id of #{@comment.id}"}
+    else
+      render json: @comment.errors, status: :unauthorized
+    end
   end
 
   # GET /comments/mine
@@ -53,6 +59,6 @@ class CommentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comment_params
-      params.require(:comment).permit(:title, :body)
+      params.require(:comment).permit(:title, :body, :user_id, :article_id, :published_at)
     end
 end

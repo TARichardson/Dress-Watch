@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
 
-    if @product.save
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @product.save
       render json: @product, status: :created, location: @product
     else
       render json: @product.errors, status: :unprocessable_entity
@@ -27,7 +27,8 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    if @product.update(product_params)
+    # statment should short circuit and the product won't be updated
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @product.update(product_params)
       render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
@@ -36,7 +37,12 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    @product.destroy
+    # statment should short circuit and the product won't be destroy
+    if (current_user[:role]== "admin" || current_user[:role] == "editor") && @product.destroy
+      render json: {msg: "deleted an product with id of #{@product.id}"}
+    else
+      render json: @product.errors, status: :unauthorized
+    end
   end
 
   private
