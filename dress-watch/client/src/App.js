@@ -6,14 +6,16 @@ import {
         BrowserRouter as Router, Route, Redirect
        }        from 'react-router-dom';
 
-import Welcome  from './components/Welcome.jsx';
-import NavBar   from './components/NavBar.jsx';
-import Home     from './components/Home.jsx';
-import News     from './components/News.jsx';
-import Reviews  from './components/Reviews.jsx';
-import Products from './components/Products.jsx';
-import Brands   from './components/Brands.jsx';
-import axios    from 'axios';
+import Welcome   from './components/Welcome.jsx';
+import NavBar    from './components/NavBar.jsx';
+import Home      from './components/Home.jsx';
+import News      from './components/News.jsx';
+import Reviews   from './components/Reviews.jsx';
+import Products  from './components/Products.jsx';
+import Brands    from './components/Brands.jsx';
+import AuthForms from './components/AuthForms.jsx';
+import Profile   from './components/Profile.jsx';
+//import axios     from 'axios';
 //import Login    from './componets/Login.jsx';
 import './App.css';
 
@@ -66,11 +68,14 @@ componentDidMount = async () => {
       }/>
         <h1>React</h1>
         <h2>{msg}</h2>
-        <Route exact path="/Home" render={(match) => <Home logged_in={this.state.logged_in} match={match} />}/>
-        <Route exact path="/news" component={News} />
-        <Route exact path="/reviews" component={Reviews} />
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/brands" component={Brands} />
+        <Route path="/Home" render={(match) => <Home logged_in={this.state.logged_in} match={match} />}/>
+        <Route path="/news" component={News} />
+        <Route path="/reviews" component={Reviews} />
+        <Route path="/products" component={Products} />
+        <Route path="/brands" component={Brands} />
+        <Route path="/auth" component={AuthForms} />
+        <Route path="/profile" component={Profile} />
+
 
       </Fragment>
 
