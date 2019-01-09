@@ -13,7 +13,7 @@ import Brands    from './components/Brands.jsx';
 import AuthForms from './components/AuthForms.jsx';
 import Profile   from './components/Profile.jsx';
 //import axios     from 'axios';
-import { login } from './services/auth.jsx';
+import { login, create } from './services/auth.jsx';
 import './App.css';
 
 
@@ -35,6 +35,16 @@ class App extends Component {
         real_last_name: "",
         password: "",
         password_confirmation: "",
+      },
+      profile:  {
+        id: "",
+        email: "",
+        user_name: "",
+        real_first_name: "",
+        real_last_name: "",
+        password: "",
+        password_confirmation: "",
+        joined: "",
       },
       logged_in: false,
       to_welcome: true,
@@ -63,10 +73,10 @@ class App extends Component {
     // console.log(resp.data);
   }
 
-  toggle_logged_in = () => {
+  toggle_logged_in = async () => {
     const new_log = !this.state.logged_in;
     const new_auth = !this.state.to_auth;
-    this.setState({
+    await this.setState({
       logged_in: new_log,
       to_auth: new_auth,
       to_welcome: false
@@ -83,45 +93,103 @@ class App extends Component {
 
   get_token = async (credentials) => {
     // make call to login and get jwt token
-    const tokenData = await login(this.state.login);
-    localStorage.setItem('token', tokenData.jwt);
-    this.setState({
-      to_profile: true,
-      to_welcome: false
-    });
+    try {
+    const tokenData = await login(credentials);
+
+  debugger;
+
+      localStorage.setItem('token', tokenData.jwt);
+      await this.setState({
+        logged_in: true,
+        to_auth: false,
+        to_profile: true,
+        to_welcome: false,
+        to_register: false,
+      });
+    }
+    catch(evt){
+      console.log(evt);
+    }
   }
 
-  log_out = (evt) => {
+  log_out = async (evt) => {
     localStorage.removeItem('token');
-    this.setState({
+    await this.setState({
       to_auth: true,
       logged_in: false,
       to_welcome: true,
       to_profile: false,
       to_register: false,
+      login: {
+        email: "",
+        user_name: "",
+        password: ""
+      },
+      register: {
+        email: "",
+        user_name: "",
+        real_first_name: "",
+        real_last_name: "",
+        password: "",
+        password_confirmation: "",
+      },
+      profile:  {
+        id: "",
+        email: "",
+        user_name: "",
+        real_first_name: "",
+        real_last_name: "",
+        password: "",
+        password_confirmation: "",
+        joined: "",
+      }
     })
   }
 
   create_user = async (register) => {
-
-  }
+    try {
+    const userData = await create(register);
+      const login = {
+        email: userData.email,
+        user_name: userData.user_name,
+        password: register.password,
+      };
+      const profile =  {
+        id: userData.id,
+        email: userData.email,
+        user_name: userData.user_name,
+        real_first_name: userData.real_first_name,
+        real_last_name: userData.real_last_name,
+        password: "",
+        password_confirmation: "",
+        joined: userData.created_at,
+      }
+      this.get_token(login);
+      await this.setState(prevState => ({
+      ...prevState,
+      profile: profile,
+    })
+  );
+}
+catch(evt) {
+  console.log(evt)
+}
+}
 
   handle_login_submit = (evt) => {
     evt.preventDefault();
-    this.get_token(this.state.credentials);
-    this.toggle_logged_in();
+    this.get_token(this.state.login);
   }
 
   handle_register_submit = (evt) => {
     evt.preventDefault();
     this.create_user(this.state.register);
-    this.get_token(this.state.credentials);
-    this.toggle_logged_in();
+
   }
 
-  handle_login_change = (evt) => {
+  handle_login_change = async (evt) => {
     const { name, value } = evt.target
-    this.setState(prevState => ({
+    await this.setState(prevState => ({
         login: {
           ...prevState.login,
           [name]: value,
@@ -130,9 +198,9 @@ class App extends Component {
     )
   }
 
-  handle_register_change = (evt) => {
+  handle_register_change = async (evt) => {
     const {name, value } = evt.target
-    this.setState(prevState => ({
+    await this.setState(prevState => ({
         register: {
           ...prevState.register,
           [name]: value,
@@ -141,9 +209,9 @@ class App extends Component {
     )
   }
 
-  toggle_register = () => {
+  toggle_register = async () => {
     const new_reg = !this.state.to_register;
-    this.setState({
+    await this.setState({
       to_register: new_reg,
       to_welcome: false
 
