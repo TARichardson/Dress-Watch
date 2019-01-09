@@ -9,14 +9,16 @@ export default function AuthForms(props) {
   try {
   const Login = props.app_state.to_register
   ? <Fragment>
-      <RegisterForm/>
+      <RegisterForm register={props.app_state.register}
+                    submit={props.handle_register_submit}
+                    change={props.handle_register_change} />
       <button onClick={props.toggle_register}>to login page</button>
-      <button onClick={props.handle_login_submit}>Register</button>
     </Fragment>
   : <Fragment>
-      <LoginForm/>
+      <LoginForm login={props.app_state.login}
+                 submit={props.handle_login_submit}
+                 change={props.handle_login_change}/>
       <button onClick={props.toggle_register}>to register page</button>
-      <button onClick={props.handle_login_submit}>Log in</button>
     </Fragment>
   const authForms = props.app_state.to_profile
   ? <Redirect to="/profile" />
