@@ -1,6 +1,6 @@
 import React, { Component, Fragment }
         from 'react';
-import { BrowserRouter as Router, Route, Redirect}
+import { BrowserRouter as Router, Route, Redirect, Switch}
         from 'react-router-dom';
 
 import Welcome   from './components/Welcome.jsx';
@@ -95,7 +95,10 @@ class App extends Component {
     localStorage.removeItem('token');
     this.setState({
       to_auth: true,
-      logged_in: false
+      logged_in: false,
+      to_welcome: true,
+      to_profile: false,
+      to_register: false,
     })
   }
 
@@ -128,22 +131,15 @@ class App extends Component {
   }
 
   render() {
-    const msg = `is logged in? ${this.state.logged_in}`;
-    const main = this.state.to_welcome
-    ? <Fragment>
-      <Route exact path="/" render={ () =>
-        <Redirect push to="/welcome" />
-      }/>
-      <Route path="/welcome" render={(match) => <Welcome match={match} toggle_welcome={this.toggle_welcome}/> }/>
-    </Fragment>
-
-    : <Fragment>
-      <NavBar logged_in={this.state.logged_in}/>
-      <Route exact path="/" render={ () =>
-        <Redirect push to="/Home" />
-      }/>
-      <h1>React</h1>
-      <h2>{msg}</h2>
+    const main =
+      <Fragment>
+      <Switch>
+      <Route exact path="/" render={ () => <Redirect  to="/welcome" /> } />
+      <Route path="/welcome" render={(match) => <Welcome match={match} toggle_welcome={this.toggle_welcome} to_welcome={this.state.to_welcome}/> }/>
+      <Route path="/" render={ () => <NavBar logged_in={this.state.logged_in}/> } />
+      </Switch>
+      {/* Logical Main component */}
+      <Switch>
       <Route path="/Home" render={(match) => <Home logged_in={this.state.logged_in} match={match} /> } />
       <Route path="/news" component={News} />
       <Route path="/reviews" component={Reviews} />
@@ -156,7 +152,8 @@ class App extends Component {
       <Route path="/profile" render={(match) => <Profile match={match}
                                                          app_state={this.state}
                                                          log_out={this.log_out} /> } />
-    </Fragment>
+    </Switch>
+  </Fragment>
 
 
     return (
