@@ -93,14 +93,22 @@ class App extends Component {
 
   get_token = async (credentials) => {
     // make call to login and get jwt token
-    const {tokenData, status} = await login(credentials);
-    if (status === "Created") {
+    try {
+    const tokenData = await login(credentials);
+
+  debugger;
+
       localStorage.setItem('token', tokenData.jwt);
       await this.setState({
+        logged_in: true,
+        to_auth: false,
         to_profile: true,
-        to_welcome: false
+        to_welcome: false,
+        to_register: false,
       });
-      this.toggle_logged_in();
+    }
+    catch(evt){
+      console.log(evt);
     }
   }
 
@@ -112,24 +120,60 @@ class App extends Component {
       to_welcome: true,
       to_profile: false,
       to_register: false,
+      login: {
+        email: "",
+        user_name: "",
+        password: ""
+      },
+      register: {
+        email: "",
+        user_name: "",
+        real_first_name: "",
+        real_last_name: "",
+        password: "",
+        password_confirmation: "",
+      },
+      profile:  {
+        id: "",
+        email: "",
+        user_name: "",
+        real_first_name: "",
+        real_last_name: "",
+        password: "",
+        password_confirmation: "",
+        joined: "",
+      }
     })
   }
 
   create_user = async (register) => {
-    const {userData, status} = await create(register);
-    if (status === "Created") {
+    try {
+    const userData = await create(register);
       const login = {
         email: userData.email,
         user_name: userData.user_name,
         password: register.password,
       };
+      const profile =  {
+        id: userData.id,
+        email: userData.email,
+        user_name: userData.user_name,
+        real_first_name: userData.real_first_name,
+        real_last_name: userData.real_last_name,
+        password: "",
+        password_confirmation: "",
+        joined: userData.created_at,
+      }
       this.get_token(login);
-    }
-    await this.setState(prevState => ({
+      await this.setState(prevState => ({
       ...prevState,
-      profile: userData,
+      profile: profile,
     })
   );
+}
+catch(evt) {
+  console.log(evt)
+}
 }
 
   handle_login_submit = (evt) => {

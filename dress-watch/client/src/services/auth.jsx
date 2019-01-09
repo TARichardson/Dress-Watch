@@ -9,8 +9,7 @@ export const login = async (credentials) => {
     data: {auth: credentials},
   });
   const tokenData = resp.data
-  const status = resp.statusText
-  return [tokenData,status]
+  return tokenData
 }
 
 export const create = async (register) => {
@@ -20,6 +19,5 @@ export const create = async (register) => {
     data: {user: register},
   });
   const userData = resp.data
-  const status = resp.statusText
-  return [userData, status]
+  return userData
 }
