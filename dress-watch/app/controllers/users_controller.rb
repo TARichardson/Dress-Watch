@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
-  before_action :authenticate_user, only: [:update, :destroy]
+  before_action :authenticate_user, only: [:update, :destroy, :mine]
 
 
   # GET /users
@@ -44,6 +44,11 @@ class UsersController < ApplicationController
     else
       render json: {msg: "you can't delete another user's profile."}
     end
+  end
+
+  # GET /user/mine
+  def mine
+    render json: current_user
   end
 
   private

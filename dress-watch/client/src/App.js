@@ -13,7 +13,7 @@ import Brands    from './components/Brands.jsx';
 import AuthForms from './components/AuthForms.jsx';
 import Profile   from './components/Profile.jsx';
 //import axios     from 'axios';
-import { login, create } from './services/auth.jsx';
+import { login, create, getSelf } from './services/auth.jsx';
 import './App.css';
 
 
@@ -35,6 +35,7 @@ class App extends Component {
         real_last_name: "",
         password: "",
         password_confirmation: "",
+        role: "member",
       },
       profile:  {
         id: "",
@@ -44,13 +45,17 @@ class App extends Component {
         real_last_name: "",
         password: "",
         password_confirmation: "",
+        role: "member",
         joined: "",
       },
       logged_in: false,
       to_welcome: true,
       to_profile: false,
       to_register: false,
-      to_auth: true
+      to_auth: true,
+      ProfileData: {},
+      BrandsData: {},
+      ArticlesData: {},
 
     }
   }
@@ -59,12 +64,25 @@ class App extends Component {
     //localStorage.setItem('token',"hgkgkjhkjb");
     // check if the user has a token in local storage
     // if localStorage is empty =>  localStorage = nil, !localStorage = true, !!localStorage = false
-    const token = !!localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     // if token skip welcome page
-    if (token) {
+    if (!!token) {
+      const userData = await getSelf(token);
+      const profile =  {
+        id: userData.id,
+        email: userData.email,
+        user_name: userData.user_name,
+        real_first_name: userData.real_first_name,
+        real_last_name: userData.real_last_name,
+        password: "",
+        password_confirmation: "",
+        role: userData.role,
+        joined: userData.created_at,
+      }
       this.setState({
         logged_in: true,
-        to_welcome: false
+        to_welcome: false,
+        profile: profile,
 
       })
     }
@@ -95,9 +113,18 @@ class App extends Component {
     // make call to login and get jwt token
     try {
     const tokenData = await login(credentials);
-
-  debugger;
-
+    const userData = await getSelf(tokenData.jwt);
+    const profile =  {
+      id: userData.id,
+      email: userData.email,
+      user_name: userData.user_name,
+      real_first_name: userData.real_first_name,
+      real_last_name: userData.real_last_name,
+      password: "",
+      password_confirmation: "",
+      role: userData.role,
+      joined: userData.created_at,
+    }
       localStorage.setItem('token', tokenData.jwt);
       await this.setState({
         logged_in: true,
@@ -105,6 +132,7 @@ class App extends Component {
         to_profile: true,
         to_welcome: false,
         to_register: false,
+        profile: profile,
       });
     }
     catch(evt){
@@ -131,6 +159,7 @@ class App extends Component {
         real_first_name: "",
         real_last_name: "",
         password: "",
+        role: "member",
         password_confirmation: "",
       },
       profile:  {
@@ -141,6 +170,7 @@ class App extends Component {
         real_last_name: "",
         password: "",
         password_confirmation: "",
+        role: "member",
         joined: "",
       }
     })
@@ -162,6 +192,7 @@ class App extends Component {
         real_last_name: userData.real_last_name,
         password: "",
         password_confirmation: "",
+        role: userData.role,
         joined: userData.created_at,
       }
       this.get_token(login);

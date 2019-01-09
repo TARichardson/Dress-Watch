@@ -21,3 +21,15 @@ export const create = async (register) => {
   const userData = resp.data
   return userData
 }
+
+export const getSelf = async (token) => {
+  const resp = await axios({
+    method: 'get',
+    url: `${URL_Users}/mine`,
+    headers: {
+   Authorization: `Bearer ${token}`,
+ },
+  });
+  const userData = resp.data
+  return userData
+}

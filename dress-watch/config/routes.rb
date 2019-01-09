@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   post 'user_token' => 'user_token#create'
+  get  '/users/mine'  => 'users#mine'
+  get  '/articles/mine'  => 'articles#mine'
+  get  '/comments/mine'  => 'comments#mine'
+  get  '/replies/mine'  => 'replies#mine'
+
   resources :cors
   resources :replies
   resources :comments
