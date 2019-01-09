@@ -22,13 +22,57 @@ export const create = async (register) => {
   return userData
 }
 
+export const getAllUser = async () => {
+  const resp = await axios({
+    method: 'get',
+    url: `${URL_Users}`,
+  });
+  const userData = resp.data
+  return userData
+}
+
+export const getUser = async (id) => {
+  const resp = await axios({
+    method: 'get',
+    url: `${URL_Users}/${id}`,
+  });
+  const userData = resp.data
+  return userData
+}
+
 export const getSelf = async (token) => {
   const resp = await axios({
     method: 'get',
     url: `${URL_Users}/mine`,
     headers: {
-   Authorization: `Bearer ${token}`,
- },
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const userData = resp.data
+  return userData
+}
+
+export const updateUser = async (id,data,token) => {
+  const resp = await axios({
+    method: 'put',
+    url: `${URL_Users}/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {user: data},
+  });
+  const userData = resp.data
+  return userData
+}
+
+export const deleteUser = async (id,data,token) => {
+  const resp = await axios({
+    method: 'delete',
+    url: `${URL_Users}/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {user: data},
   });
   const userData = resp.data
   return userData
