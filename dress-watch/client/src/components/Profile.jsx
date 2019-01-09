@@ -1,36 +1,25 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 
 
-export default class Profile extends Component {
-  constructor(props) {
-    super(props)
+export default function Profile(props){
 
-    this.state = {
-      articles: [],
-    }
+  console.log(props)
+  const token = `token = ${!!localStorage.getItem('token')}`
+  const profile = ( props.app_state.to_auth
+  )
 
-  }
+  ? <Redirect push to="/auth" />
+  : <div key="profile">
+  <button onClick={props.log_out}>Log Out</button>
+  <h1>Profile</h1>
+  {token}
+  </div>
 
-  render() {
-    console.log(this.props)
-    const token = `token = ${!!localStorage.getItem('token')}`
-    const profile = ( this.props.app_state.to_auth
-    )
+  return (
+    <Fragment>
+    {profile}
+    </Fragment>
 
-    ? <Redirect push to="/auth" />
-    : <div key="profile">
-    <button onClick={this.props.log_out}>Log Out</button>
-    <h1>Profile</h1>
-    {token}
-    </div>
-
-    return (
-      <Fragment>
-      {profile}
-      </Fragment>
-
-    )
-  }
-
+  )
 }
