@@ -2,7 +2,34 @@ import axios from 'axios';
 
 const URL = 'http://localhost:3001/articles'
 
-export const getAllArticles = async () => {
+export const getAllNews = async () => {
+  const resp = await axios({
+    method: 'get',
+    url: `${URL}`,
+  });
+  const articlesData = resp.data
+  return articlesData
+}
+
+export const getAllReviews = async () => {
+  const resp = await axios({
+    method: 'get',
+    url: `${URL}`,
+  });
+  const articlesData = resp.data
+  return articlesData
+}
+
+export const getAllNewsLatest = async () => {
+  const resp = await axios({
+    method: 'get',
+    url: `${URL}`,
+  });
+  const articlesData = resp.data
+  return articlesData
+}
+
+export const getAllReviewsLatest = async () => {
   const resp = await axios({
     method: 'get',
     url: `${URL}`,

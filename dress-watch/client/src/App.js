@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch}
 
 import Welcome   from './components/Welcome.jsx';
 import NavBar    from './components/NavBar.jsx';
+import Footer    from './components/Footer.jsx';
 import Home      from './components/Home.jsx';
 import News      from './components/News.jsx';
 import Reviews   from './components/Reviews.jsx';
@@ -12,6 +13,8 @@ import Products  from './components/Products.jsx';
 import Brands    from './components/Brands.jsx';
 import AuthForms from './components/AuthForms.jsx';
 import Profile   from './components/Profile.jsx';
+import About     from './components/About.jsx';
+import Credit    from './components/Credit.jsx';
 //import axios     from 'axios';
 import { login, create, getSelf } from './services/auth.jsx';
 import './App.css';
@@ -53,9 +56,14 @@ class App extends Component {
       to_profile: false,
       to_register: false,
       to_auth: true,
-      ProfileData: {},
-      BrandsData: {},
-      ArticlesData: {},
+      profileData: {},
+      brandsData: [],
+      productsData: [],
+      newsData: [],
+      reviewsData: [],
+      latestNewsData: [],
+      latestReviewsData: [],
+      latestProductsData: [],
 
     }
   }
@@ -90,6 +98,43 @@ class App extends Component {
     // const resp = await axios("");
     // console.log(resp.data);
   }
+
+  saveBrands = async (brandsData) => {
+    await this.setState({
+      brandsData: brandsData
+    });
+  }
+  saveProducts = async (productsData) => {
+    await this.setState({
+      productsData: productsData
+    });
+  }
+  saveNews = async (newsData) => {
+    await this.setState({
+      newsData: newsData
+    });
+  }
+  saveReviews = async (reviewsData) => {
+    await this.setState({
+      reviewsData: reviewsData
+    });
+  }
+  saveLatestNews = async (latestNewsData) => {
+    await this.setState({
+      latestNewsData: latestNewsData
+    });
+  }
+  saveLatestReviews = async (latestReviewsData) => {
+    await this.setState({
+      latestReviewsData: latestReviewsData
+    });
+  }
+  saveLatestProducts = async (latestProductsData) => {
+    await this.setState({
+      latestProductsData: latestProductsData
+    });
+  }
+
 
   toggle_logged_in = async () => {
     const new_log = !this.state.logged_in;
@@ -253,27 +298,56 @@ catch(evt) {
     const main =
       <Fragment>
       <Switch>
-      <Route exact path="/" render={ () => <Redirect  to="/welcome" /> } />
-      <Route path="/welcome" render={(match) => <Welcome match={match} toggle_welcome={this.toggle_welcome} to_welcome={this.state.to_welcome}/> }/>
-      <Route path="/" render={ () => <NavBar logged_in={this.state.logged_in}/> } />
+      <Route exact path="/"   render={ ()     => <Redirect  to="/welcome" /> } />
+      <Route path="/welcome"  render={(match) => <Welcome match={match} toggle_welcome={this.toggle_welcome} to_welcome={this.state.to_welcome}/> }/>
+      <Route path="/"         render={ ()     => <NavBar logged_in={this.state.logged_in}/> } />
       </Switch>
       {/* Logical Main component */}
       <Switch>
-      <Route path="/Home" render={(match) => <Home logged_in={this.state.logged_in} match={match} /> } />
-      <Route path="/news" component={News} />
-      <Route path="/reviews" component={Reviews} />
-      <Route path="/products" component={Products} />
-      <Route path="/brands" component={Brands} />
-      <Route path="/auth" render={(match) => <AuthForms match={match}
-                                                        app_state={this.state}
-                                                        toggle_register={this.toggle_register}
-                                                        handle_login_submit={this.handle_login_submit}
-                                                        handle_register_submit={this.handle_register_submit}
-                                                        handle_login_change={this.handle_login_change}
-                                                        handle_register_change={this.handle_register_change} /> } />
-      <Route path="/profile" render={(match) => <Profile match={match}
-                                                         app_state={this.state}
-                                                         log_out={this.log_out} /> } />
+      <Route path="/Home"     render={(match) => <Home match={match}
+                                                  logged_in={this.state.logged_in}
+                                                  saveLatestNews={this.saveLatestNews}
+                                                  latestNewsData={this.state.latestNewsData}
+                                                  saveLatestReviews={this.saveLatestReviews}
+                                                  latestReviewsData={this.state.latestReviewsData}
+                                                  saveLatestProducts={this.saveLatestProducts}
+                                                  latestProductsData={this.state.latestProductsData} />} />
+
+      <Route path="/news"     render={(match) => <News match={match}
+                                                       saveNews={this.saveNews}
+                                                       newsData={this.state.newsData} />} />
+
+      <Route path="/reviews"  render={(match) => <Reviews match={match}
+                                                          saveReviews={this.saveReviews}
+                                                          reviewsData={this.state.reviewsData} />} />
+
+      <Route path="/products" render={(match) => <Products match={match}
+                                                           saveProducts={this.saveProducts}
+                                                           productsData={this.state.productsData} />} />
+
+      <Route path="/brands"   render={(match) => <Brands match={match}
+                                                         saveBrands={this.saveBrands}
+                                                         brandsData={this.state.brandsData} />} />
+
+      <Route path="/auth"     render={(match) => <AuthForms match={match}
+                                                            app_state={this.state}
+                                                            toggle_register={this.toggle_register}
+                                                            handle_login_submit={this.handle_login_submit}
+                                                            handle_register_submit={this.handle_register_submit}
+                                                            handle_login_change={this.handle_login_change}
+                                                            handle_register_change={this.handle_register_change} /> } />
+
+      <Route path="/profile"  render={(match) => <Profile match={match}
+                                                          app_state={this.state}
+                                                          log_out={this.log_out} /> } />
+      <Route path="/about" component={About} />
+      <Route path="/credit" component={Credit} />
+    </Switch>
+
+    <Switch>
+      <Route exact path="/" render={ () => <Redirect  to="/welcome" /> } />
+      <Route path="/welcome" render={(match) => <Fragment />}/>
+      <Route path="/" render={ () => <Footer logged_in={this.state.logged_in}/> } />
     </Switch>
   </Fragment>
 
