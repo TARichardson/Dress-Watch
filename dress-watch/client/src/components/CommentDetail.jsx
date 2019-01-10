@@ -11,7 +11,8 @@ export default function CommentDetail(props) {
 
       <p>{comment.body}</p>
       <div key="ReplyListDiv">
-        <ReplyList replies={comment.replies}/>
+        <h3>if replys</h3>
+        {/* <ReplyList replies={comment.replies}/> */}
       </div>
     </div>
   )

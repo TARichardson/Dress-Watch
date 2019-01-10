@@ -1,7 +1,7 @@
 import React, { Component, Fragment }
-        from 'react';
+                 from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch}
-        from 'react-router-dom';
+                 from 'react-router-dom';
 
 import Welcome   from './components/Welcome.jsx';
 import NavBar    from './components/NavBar.jsx';
@@ -16,7 +16,8 @@ import Profile   from './components/Profile.jsx';
 import About     from './components/About.jsx';
 import Credit    from './components/Credit.jsx';
 //import axios     from 'axios';
-import { login, create, getSelf } from './services/auth.jsx';
+import { login, create, getSelf, updateUser, deleteUser }
+                 from './services/auth.jsx';
 import './App.css';
 
 
@@ -50,13 +51,51 @@ class App extends Component {
         password_confirmation: "",
         role: "member",
         joined: "",
+        edit_mode: false,
+
+      },
+      newNews: {
+        title: "",
+        sub_title: "",
+        body: "",
+        product_id: 0,
+      },
+      newReview: {
+        title: "",
+        sub_title: "",
+        body: "",
+        product_id: 0,
+      },
+      newProduct: {
+        title: "",
+        sub_title: "",
+        body: "",
+        product_id: 0,
+      },
+      newBrand: {
+        title: "",
+        sub_title: "",
+        body: "",
+        product_id: 0,
+      },
+      newComment: {
+        title: "",
+        body: "",
+        user_id: 1,
+        article_id: 0,
+      },
+      newReply: {
+        title: "",
+        body: "",
+        user_id: 1,
+        comment_id: 0,
       },
       logged_in: false,
       to_welcome: true,
       to_profile: false,
       to_register: false,
       to_auth: true,
-      profileData: {},
+      profileData: [],
       brandsData: [],
       productsData: [],
       newsData: [],
@@ -86,6 +125,8 @@ class App extends Component {
         password_confirmation: "",
         role: userData.role,
         joined: userData.created_at,
+        edit_mode: false,
+
       }
       this.setState({
         logged_in: true,
@@ -117,6 +158,11 @@ class App extends Component {
   saveReviews = async (reviewsData) => {
     await this.setState({
       reviewsData: reviewsData
+    });
+  }
+  saveProfileData = async (profileData) => {
+    await this.setState({
+      profileData: profileData
     });
   }
   saveLatestNews = async (latestNewsData) => {
@@ -157,19 +203,21 @@ class App extends Component {
   get_token = async (credentials) => {
     // make call to login and get jwt token
     try {
-    const tokenData = await login(credentials);
-    const userData = await getSelf(tokenData.jwt);
-    const profile =  {
-      id: userData.id,
-      email: userData.email,
-      user_name: userData.user_name,
-      real_first_name: userData.real_first_name,
-      real_last_name: userData.real_last_name,
-      password: "",
-      password_confirmation: "",
-      role: userData.role,
-      joined: userData.created_at,
-    }
+      const tokenData = await login(credentials);
+      const userData = await getSelf(tokenData.jwt);
+      const profile =  {
+        id: userData.id,
+        email: userData.email,
+        user_name: userData.user_name,
+        real_first_name: userData.real_first_name,
+        real_last_name: userData.real_last_name,
+        password: "",
+        password_confirmation: "",
+        role: userData.role,
+        joined: userData.created_at,
+        edit_mode: false,
+
+      }
       localStorage.setItem('token', tokenData.jwt);
       await this.setState({
         logged_in: true,
@@ -217,13 +265,14 @@ class App extends Component {
         password_confirmation: "",
         role: "member",
         joined: "",
+        edit_mode: false,
       }
     })
   }
 
   create_user = async (register) => {
     try {
-    const userData = await create(register);
+      const userData = await create(register);
       const login = {
         email: userData.email,
         user_name: userData.user_name,
@@ -239,60 +288,112 @@ class App extends Component {
         password_confirmation: "",
         role: userData.role,
         joined: userData.created_at,
+        edit_mode: false,
+
       }
       this.get_token(login);
       await this.setState(prevState => ({
-      ...prevState,
-      profile: profile,
-    })
-  );
-}
-catch(evt) {
-  console.log(evt)
-}
-}
-
-  handle_login_submit = (evt) => {
-    evt.preventDefault();
-    this.get_token(this.state.login);
-  }
-
-  handle_register_submit = (evt) => {
-    evt.preventDefault();
-    this.create_user(this.state.register);
-
-  }
-
-  handle_login_change = async (evt) => {
-    const { name, value } = evt.target
-    await this.setState(prevState => ({
-        login: {
-          ...prevState.login,
-          [name]: value,
-        }
+        ...prevState,
+        profile: profile,
       })
-    )
+    );
   }
-
-  handle_register_change = async (evt) => {
-    const {name, value } = evt.target
-    await this.setState(prevState => ({
-        register: {
-          ...prevState.register,
-          [name]: value,
-        }
-      })
-    )
+  catch(evt) {
+    console.log(evt)
   }
+}
 
-  toggle_register = async () => {
-    const new_reg = !this.state.to_register;
-    await this.setState({
-      to_register: new_reg,
-      to_welcome: false
-
-    })
+update_user = async (id,data) => {
+  try {
+    const updated_user = await updateUser(id,data,localStorage.getItem('token'))
+    console.log(updated_user)
   }
+  catch(evt) {
+    console.log(evt)
+  }
+}
+
+delete_user = async (id,data) => {
+  try {
+    const resp = await deleteUser(id,data,localStorage.getItem('token'))
+    if(id === this.state.profile.id)
+    {
+      this.log_out();
+    }
+    console.log(resp)
+  }
+  catch(evt) {
+    console.log(evt)
+  }
+}
+
+handle_login_submit = (evt) => {
+  evt.preventDefault();
+  this.get_token(this.state.login);
+}
+
+handle_register_submit = (evt) => {
+  evt.preventDefault();
+  this.create_user(this.state.register);
+}
+
+Update_User_submit = (evt) => {
+  evt.preventDefault();
+  this.update_user(this.state.profile.id
+    ,this.state.profile);
+  this.toggle_user_edit();
+}
+
+handle_login_change = async (evt) => {
+  const { name, value } = evt.target
+  await this.setState(prevState => ({
+    login: {
+      ...prevState.login,
+      [name]: value,
+    }
+  })
+)
+}
+
+handle_register_change = async (evt) => {
+  const {name, value } = evt.target
+  await this.setState(prevState => ({
+    register: {
+      ...prevState.register,
+      [name]: value,
+    }
+  })
+)
+}
+
+handle_user_change  = async (evt) => {
+  const {name, value } = evt.target
+  await this.setState(prevState => ({
+    profile: {
+      ...prevState.profile,
+      [name]: value,
+    }
+  })
+)}
+
+toggle_register = async () => {
+  const new_reg = !this.state.to_register;
+  await this.setState({
+    to_register: new_reg,
+    to_welcome: false
+
+  })
+}
+
+toggle_user_edit = async () => {
+  const user_edit = !this.state.profile.edit_mode;
+  await this.setState(prevState => ({
+    profile: {
+      ...prevState.profile,
+      edit_mode: user_edit,
+    }
+  })
+)}
 
   render() {
     const main =
@@ -339,7 +440,12 @@ catch(evt) {
 
       <Route path="/profile"  render={(match) => <Profile match={match}
                                                           app_state={this.state}
-                                                          log_out={this.log_out} /> } />
+                                                          saveProfileData={this.saveProfileData}
+                                                          log_out={this.log_out}
+                                                          Update_User_submit={this.Update_User_submit}
+                                                          delete_user={this.delete_user}
+                                                          handle_user_change={this.handle_user_change}
+                                                          toggle_user_edit={this.toggle_user_edit} /> } />
       <Route path="/about" component={About} />
       <Route path="/credit" component={Credit} />
     </Switch>

@@ -8,6 +8,7 @@ export default class News extends Component {
     this.state = {
       has_data: false,
       not_loaded: true
+
     }
   }
 
