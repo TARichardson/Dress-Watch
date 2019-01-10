@@ -1,5 +1,5 @@
 import React from 'react';
-import ReplyDetail from 'ReplyDetail.jsx';
+import ReplyDetail from './ReplyDetail.jsx';
 
 export default function ReplyList(props) {
   const replies = props.replies

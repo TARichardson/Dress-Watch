@@ -56,7 +56,7 @@ class App extends Component {
       to_profile: false,
       to_register: false,
       to_auth: true,
-      profileData: {},
+      profileData: [],
       brandsData: [],
       productsData: [],
       newsData: [],
@@ -117,6 +117,11 @@ class App extends Component {
   saveReviews = async (reviewsData) => {
     await this.setState({
       reviewsData: reviewsData
+    });
+  }
+  saveProfileData = async (profileData) => {
+    await this.setState({
+      profileData: profileData
     });
   }
   saveLatestNews = async (latestNewsData) => {
@@ -339,6 +344,7 @@ catch(evt) {
 
       <Route path="/profile"  render={(match) => <Profile match={match}
                                                           app_state={this.state}
+                                                          saveProfileData={this.saveProfileData}
                                                           log_out={this.log_out} /> } />
       <Route path="/about" component={About} />
       <Route path="/credit" component={Credit} />
