@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:3001/brands'
+const URL = process.env.PORT || "/api"
 
 export const getAllBrands = async () => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}`,
+    url: `${URL}/brands`,
   });
   const brandsData = resp.data
   return brandsData
@@ -14,7 +14,7 @@ export const getAllBrands = async () => {
 export const getBrand = async (id) => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}/${id}`,
+    url: `/${URL}/brands/${id}`,
   });
   const brandsData = resp.data
   return brandsData
@@ -23,7 +23,7 @@ export const getBrand = async (id) => {
 export const createBrands = async (brands,token) => {
   const resp = await axios({
     method: 'post',
-    url: URL,
+    url: `${URL}/brands`,
     data: {brand: brands},
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ export const createBrands = async (brands,token) => {
 export const updateBrand = async (id,data,token) => {
   const resp = await axios({
     method: 'put',
-    url: `${URL}/${id}`,
+    url: `${URL}/brands/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -49,7 +49,7 @@ export const updateBrand = async (id,data,token) => {
 export const deleteBrand = async (id,data,token) => {
   const resp = await axios({
     method: 'delete',
-    url: `${URL}/${id}`,
+    url: `${URL}/brands/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

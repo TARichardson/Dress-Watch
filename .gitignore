@@ -3,3 +3,8 @@
 ./dress-watch/.bundle/
 ./dress-watch/vendor/bundle/
 ./dress-watch/client/node_modules/
+./dress-watch/.DS_Store
+./dress-watch/log/*.log
+./dress-watch/tmp/**/*
+./dress-watch/config/database.yml
+./dress-watch/db/*.sqlite3

@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:3001/comments'
+const URL = process.env.PORT || "/api"
 
 export const getAllComments = async () => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}`,
+    url: `${URL}/comments`,
   });
   const commentsData = resp.data
   return commentsData
@@ -14,7 +14,7 @@ export const getAllComments = async () => {
 export const getComment = async (id) => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}/${id}`,
+    url: `${URL}/comments/${id}`,
   });
   const commentsData = resp.data
   return commentsData
@@ -23,7 +23,7 @@ export const getComment = async (id) => {
 export const createComments = async (comment,token) => {
   const resp = await axios({
     method: 'post',
-    url: URL,
+    url: `${URL}/comments`,
     data: {comment: comment},
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ export const createComments = async (comment,token) => {
 export const updateComment = async (id,data,token) => {
   const resp = await axios({
     method: 'put',
-    url: `${URL}/${id}`,
+    url: `${URL}/comments/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -49,7 +49,7 @@ export const updateComment = async (id,data,token) => {
 export const deleteComment = async (id,data,token) => {
   const resp = await axios({
     method: 'delete',
-    url: `${URL}/${id}`,
+    url: `${URL}/comments/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -62,7 +62,7 @@ export const deleteComment = async (id,data,token) => {
 export const getMyComments = async (token) => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}/mine`,
+    url: `${URL}/comments/mine`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

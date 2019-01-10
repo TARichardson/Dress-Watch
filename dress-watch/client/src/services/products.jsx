@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:3001/products'
+const URL = process.env.PORT || "/api"
 
 export const getAllProducts = async () => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}`,
+    url: `${URL}/products`,
   });
   const productsData = resp.data
   return productsData
@@ -14,7 +14,7 @@ export const getAllProducts = async () => {
 export const getProduct = async (id) => {
   const resp = await axios({
     method: 'get',
-    url: `${URL}/${id}`,
+    url: `${URL}/products/${id}`,
   });
   const productsData = resp.data
   return productsData
@@ -23,7 +23,7 @@ export const getProduct = async (id) => {
 export const createProducts = async (products,token) => {
   const resp = await axios({
     method: 'post',
-    url: URL,
+    url: `${URL}/products`,
     data: {product: products},
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ export const createProducts = async (products,token) => {
 export const updateProduct = async (id,data,token) => {
   const resp = await axios({
     method: 'put',
-    url: `${URL}/${id}`,
+    url: `${URL}/products/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -49,7 +49,7 @@ export const updateProduct = async (id,data,token) => {
 export const deleteProduct = async (id,data,token) => {
   const resp = await axios({
     method: 'delete',
-    url: `${URL}/${id}`,
+    url: `${URL}/products/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

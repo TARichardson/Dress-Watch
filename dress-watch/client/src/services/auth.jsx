@@ -1,11 +1,11 @@
 import axios from 'axios';
-const URL_AUTH = 'http://localhost:3001/user_token'
-const URL_Users = 'http://localhost:3001/users'
+const URL_AUTH = process.env.PORT || "/api"
+const URL_Users = process.env.PORT || "/api"
 
 export const login = async (credentials) => {
   const resp = await axios({
     method: 'post',
-    url: URL_AUTH,
+    url: `${URL_AUTH}/user_token`,
     data: {auth: credentials},
   });
   const tokenData = resp.data
@@ -15,7 +15,7 @@ export const login = async (credentials) => {
 export const create = async (register) => {
   const resp = await axios({
     method: 'post',
-    url: URL_Users,
+    url: `${URL_Users}/users`,
     data: {user: register},
   });
   const userData = resp.data
@@ -25,7 +25,7 @@ export const create = async (register) => {
 export const getAllUser = async () => {
   const resp = await axios({
     method: 'get',
-    url: `${URL_Users}`,
+    url: `${URL_Users}/users`,
   });
   const userData = resp.data
   return userData
@@ -34,7 +34,7 @@ export const getAllUser = async () => {
 export const getUser = async (id) => {
   const resp = await axios({
     method: 'get',
-    url: `${URL_Users}/${id}`,
+    url: `${URL_Users}/users/${id}`,
   });
   const userData = resp.data
   return userData
@@ -43,7 +43,7 @@ export const getUser = async (id) => {
 export const getSelf = async (token) => {
   const resp = await axios({
     method: 'get',
-    url: `${URL_Users}/mine`,
+    url: `${URL_Users}/users/mine`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -55,7 +55,7 @@ export const getSelf = async (token) => {
 export const updateUser = async (id,data,token) => {
   const resp = await axios({
     method: 'put',
-    url: `${URL_Users}/${id}`,
+    url: `${URL_Users}/users/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -68,7 +68,7 @@ export const updateUser = async (id,data,token) => {
 export const deleteUser = async (id,data,token) => {
   const resp = await axios({
     method: 'delete',
-    url: `${URL_Users}/${id}`,
+    url: `${URL_Users}/users/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

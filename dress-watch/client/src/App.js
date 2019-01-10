@@ -2,7 +2,7 @@ import React, { Component, Fragment }
                  from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch}
                  from 'react-router-dom';
-
+// components
 import Welcome   from './components/Welcome.jsx';
 import NavBar    from './components/NavBar.jsx';
 import Footer    from './components/Footer.jsx';
@@ -15,9 +15,20 @@ import AuthForms from './components/AuthForms.jsx';
 import Profile   from './components/Profile.jsx';
 import About     from './components/About.jsx';
 import Credit    from './components/Credit.jsx';
-//import axios     from 'axios';
+// services
 import { login, create, getSelf, updateUser, deleteUser }
                  from './services/auth.jsx';
+import { createComments, updateComment, deleteComment }
+                 from './services/comments.jsx';
+import { createReplies, updateReply, deleteReply }
+                from './services/replies.jsx';
+import { createArticles, updateArticle, deleteArticle }
+                from './services/articles.jsx';
+import { createBrands, updateBrand, deleteBrand }
+                 from './services/brands.jsx';
+import { createProducts, updateProduct, deleteProduct }
+                from './services/products.jsx';
+// style
 import './App.css';
 
 
@@ -394,6 +405,14 @@ toggle_user_edit = async () => {
     }
   })
 )}
+
+toggle_userProfileData_edit = async (index) => {
+  const profileData = this.state.profileData
+  profileData[index].edit_mode = !profileData[index].edit_mode;
+  await this.setState({
+    profileData: profileData,
+  });
+}
 
   render() {
     const main =
