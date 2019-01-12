@@ -2,6 +2,12 @@ A readme that contains the following:
 * Introduction to your app
     * A man’s dress watch news/review site
 
+* Github
+  * https://github.com/TARichardson/Dress-Watch
+
+* Deploy App
+ * https://shrouded-ocean-71574.herokuapp.com
+
 * site design reference
   * https://www.timex.com
   * https://www.tagheuer.com
@@ -19,6 +25,11 @@ A readme that contains the following:
     * html and css
     * react-router-dom
     * heroku
+    * bcrypt
+    * faker
+    * knock
+    * jwt
+    * pry-rail
 
 * Feature list (aka user stories)
     * user starts on the Welcome page with enter button which links to the home page
