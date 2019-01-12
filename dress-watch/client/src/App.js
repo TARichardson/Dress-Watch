@@ -417,14 +417,15 @@ toggle_userProfileData_edit = async (index) => {
   render() {
     const main =
       <Fragment>
-      <Switch>
+      <Switch className="HeaderDiv">
       <Route exact path="/"   render={ ()     => <Redirect  to="/welcome" /> } />
       <Route path="/welcome"  render={(match) => <Welcome match={match} toggle_welcome={this.toggle_welcome} to_welcome={this.state.to_welcome}/> }/>
       <Route path="/"         render={ ()     => <NavBar logged_in={this.state.logged_in}/> } />
       </Switch>
+
       {/* Logical Main component */}
       <Switch>
-      <Route path="/Home"     render={(match) => <Home match={match}
+      <Route path="/Home"     render={(match) => <Home  match={match}
                                                   logged_in={this.state.logged_in}
                                                   saveLatestNews={this.saveLatestNews}
                                                   latestNewsData={this.state.latestNewsData}

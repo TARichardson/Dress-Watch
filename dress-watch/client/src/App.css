@@ -1,3 +1,18 @@
 .App {
   text-align: center;
+  display: grid;
+  height: 100vh;
+  grid-template-areas:
+    "header header header header"
+    ". main main ."
+    "footer footer footer footer";
+}
+
+.HeaderDiv {
+border-color: black;
+}
+
+.MainContent {
+  grid-area: main;
+
 }

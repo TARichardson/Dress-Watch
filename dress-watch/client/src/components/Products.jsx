@@ -47,7 +47,7 @@ export default class Products extends Component {
     ? <ProductList products={this.props.productsData} />
     : <h2>Loading</h2>
     return (
-      <div>
+      <div className="MainContent">
       <h1>Products</h1>
         {main}
       </div>

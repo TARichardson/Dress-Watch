@@ -47,7 +47,7 @@ export default class Brands extends Component {
     ? <BrandsList brands={this.props.brandsData} />
     : <h2>Loading</h2>
     return (
-      <div>
+      <div className="MainContent">
       <h1>Brands</h1>
         {main}
       </div>

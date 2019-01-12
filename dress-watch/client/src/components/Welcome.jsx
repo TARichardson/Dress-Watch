@@ -7,7 +7,7 @@ export default function Welcome(props) {
   : <Fragment></Fragment>
 
   return (
-    <div key="Welcome">
+    <div key="Welcome" className="MainContent">
     {redir}
     <h1>Welcome</h1>
     <button onClick={props.toggle_welcome}>Enter</button>

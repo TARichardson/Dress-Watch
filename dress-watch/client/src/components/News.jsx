@@ -48,7 +48,7 @@ export default class News extends Component {
     ? <NewsList news={this.props.newsData} />
     : <h2>Loading</h2>
     return (
-      <div>
+      <div className="MainContent">
       <h1>News</h1>
         {main}
       </div>

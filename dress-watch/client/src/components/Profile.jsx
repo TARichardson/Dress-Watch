@@ -61,7 +61,7 @@ export default class Profile extends Component {
 
     const profile = ( this.props.app_state.to_auth )
     ? <Redirect push to="/auth" />
-    : <div key="profileDiv">
+    : <div key="profileDiv" className="MainContent">
         <button onClick={this.props.log_out}>Log Out</button>
         <h1>Profile</h1>
         {main}
