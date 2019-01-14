@@ -1,18 +1,106 @@
+
 .App {
   text-align: center;
   display: grid;
   height: 100vh;
   grid-template-areas:
-    "header header header header"
-    ". main main ."
-    "footer footer footer footer";
+  "header header header header"
+  ". main main ."
+  "footer footer footer footer";
+
 }
 
 .HeaderDiv {
-border-color: black;
+  border-color: black;
 }
 
 .MainContent {
   grid-area: main;
+  background-color: #352c3817;
+  border-radius: 0.5em;
 
+}
+.ProDetDiv {
+    display: flex;
+}
+.ProDetDiv > h2 {
+    flex: 1;
+}
+
+.pItem {
+  text-align: left;
+}
+.ProfileForm,.RegisterForm,.LoginForm {
+  display: block;
+}
+
+.FormItem {
+  display: flex;
+  font-size: xx-large;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.FormItem >label {
+  flex: 1;
+  text-align: start;
+
+}
+.FormItem > input{
+  flex: 1;
+  font-size: x-large;
+  width: 5em;
+}
+
+.ProfileDetail {
+  box-shadow: 0px 0px 9px 7px #cbcbcb;
+  border-radius: 0.9em;
+  padding-top: 5px;
+  border-bottom-width: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.CommentDetail {
+  box-shadow: 0px 0px 9px 7px #cbcbcb;
+  border-radius: 0.9em;
+  padding-top: 5px;
+  border-bottom-width: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.RegisterForm>.button,.LoginForm>.button {
+margin-top: 15px;
+margin-bottom: 10px;
+
+}
+
+.button {
+  background-color: #d55e8d;
+  height: 2em;
+  width: 8em;
+  color: white;
+  font-weight: bolder;
+  font-size: x-large;
+  border-radius: 0.3em;
+}
+
+.button:hover {
+  box-shadow: inset 0px 0px 11px 7px #95429359;
+  text-shadow: -1px 3px 0px #954293;
+}
+
+.buttonDel {
+  background-color: #d73150;
+  height: 2em;
+  width: 8em;
+  color: white;
+  font-weight: bolder;
+  font-size: x-large;
+  border-radius: 0.3em;
+}
+
+.buttonDel:hover {
+  box-shadow: inset 0px 0px 11px 7px #95429359;
+  text-shadow: -1px 3px 0px #954293;
 }

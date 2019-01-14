@@ -70,7 +70,7 @@ export default class Profile extends Component {
         <hr/>
         <button onClick={() =>
           this.props.delete_user(this.props.app_state.profile.id,
-            {role:this.props.app_state.profile.role}) } >Delete Account</button>
+            {role:this.props.app_state.profile.role})}  className="buttonDel">Delete Account</button>
       </div>
 
     return (

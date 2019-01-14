@@ -14,7 +14,7 @@ export default function CommentList(props) {
 
   return (
     <div key="commentList">
-      <h2>Comment list</h2>
+      <h2>Comments</h2>
         {cDetails}
     </div>
   )
