@@ -11,7 +11,6 @@ export default class News extends Component {
 
     }
   }
-
   componentDidMount = async () => {
     const news = await getAllNews();
     this.props.saveNews(news);
@@ -45,7 +44,7 @@ export default class News extends Component {
       this.loadData()
     }
     const main = this.state.has_data
-    ? <NewsList news={this.props.newsData} />
+    ? <NewsList match={this.props.match} news={this.props.newsData} />
     : <h2>Loading</h2>
     return (
       <div className="MainContent">

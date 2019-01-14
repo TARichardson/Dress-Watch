@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 export default function Credit(props) {
-  const msg = `I'm in Credits, are you logged in? ${props.logged_in}`;
+  const msg = <Fragment>
+                `I'm in Credits, are you logged in? ${props.logged_in}`;
+              </Fragment>
   console.log(props)
   return (
     <div key="CreditDiv" className="MainContent">

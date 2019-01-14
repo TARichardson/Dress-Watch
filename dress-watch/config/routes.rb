@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   get  '/articles/mine'  => 'articles#mine'
   get  '/comments/mine'  => 'comments#mine'
   get  '/replies/mine'  => 'replies#mine'
-
+  get '/image' => 'products#image2'
+  get '/image/:id' => 'products#image'
   resources :cors
   resources :replies
   resources :comments

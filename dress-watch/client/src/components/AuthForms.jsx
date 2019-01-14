@@ -23,7 +23,7 @@ export default function AuthForms(props) {
   const authForms = props.app_state.to_profile
   ? <Redirect to="/profile" />
   : <div key="authForm" className="MainContent">
-      <h1> Auth Forms</h1>
+      <h1> Login/Register Forms</h1>
       {Login}
     </div>
 

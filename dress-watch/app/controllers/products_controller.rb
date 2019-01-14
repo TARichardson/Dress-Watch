@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
   before_action :authenticate_user, only: [:create, :update, :destroy]
+  before_action :get_image, only: [:image]
+  before_action :gett_image, only: [:image2]
 
   # GET /products
   def index
@@ -45,6 +47,15 @@ class ProductsController < ApplicationController
     end
   end
 
+  #GET /products/image/M.jpg
+  def image
+    render json: send_file
+  end
+
+  def image2
+    render json: send_file
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
@@ -54,5 +65,16 @@ class ProductsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def product_params
       params.require(:product).permit(:name, :details)
+    end
+
+    def get_image
+      #debugger;
+        path = "#{Rails.root}/Resource/#{params[:id]}.jpg" # just a sample path to test
+       send_file path, :content_type => 'image/jpg', :disposition => 'inline'
+    end
+
+    def gett_image
+        path2 = "#{Rails.root}/Resource/atlas2-hand-375-mm-19565211_945900_ED_M.jpg" # just a sample path to test
+       send_file path2, :content_type => 'image/jpg', :disposition => 'inline'
     end
 end

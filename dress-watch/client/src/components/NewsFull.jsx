@@ -1,5 +1,24 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import CommentList from './CommentList.jsx';
+import Moment from 'react-moment';
+
+const getComments = (story) => {
+  try {
+    return (
+      <Fragment>
+      <h3>Comments</h3>
+      <CommentList comments={story.comments}/>
+      </Fragment>
+    )
+  }
+  catch (evt) {
+    return (
+      <Fragment>
+        <p>no Comments</p>
+      </Fragment>
+    )
+  }
+}
 
 export default function NewsFull(props) {
   const story = props.story
@@ -7,11 +26,22 @@ export default function NewsFull(props) {
 
   return (
     <div key={key}>
-      <h2>{story.title}</h2>
-      <h2>{story.sub_title}</h2>
-      <h3>published at:{story.published_at} by user {story.user_id}</h3>
-      <p>{story.body}</p>
-      <CommentList comments={story.comments}/>
+      <div className="storyTitle">
+        <h2>{story.title}</h2>
+      </div>
+      <div className="storySubTitle">
+        <h2>{story.sub_title}</h2>
+      </div>
+      <div className="storyPub">
+        <p>published at: <Moment date={story.published_at}/></p>
+      </div>
+      <div className="storyUser">
+        <p>by : {story.user_id}</p>
+      </div>
+      <div className="">
+        <p>{story.body}</p>
+      </div>
+      {getComments()}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import CommentDetail from './CommentDetail.jsx';
 
 export default function ProfileList(props) {
   const comments = props.comments
-  const cDetails = comments.map( (comment) =>{
+  const cDetails = comments.map( (comment) => {
         const divkey = `CDLK-${comment.id}`
         return (
         <div key={divkey}>
@@ -14,7 +14,7 @@ export default function ProfileList(props) {
 
   return (
     <div key="ProfileList">
-      <h2>Comment list</h2>
+      <h2>Comment List</h2>
         {cDetails}
     </div>
   )

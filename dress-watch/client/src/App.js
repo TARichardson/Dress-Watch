@@ -114,6 +114,7 @@ class App extends Component {
       latestNewsData: [],
       latestReviewsData: [],
       latestProductsData: [],
+      resources:{},
 
     }
   }
