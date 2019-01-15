@@ -1,21 +1,24 @@
 import React from 'react';
 import NewsDetail from './NewsDetail.jsx';
 import NewsFull from './NewsFull.jsx';
-import { Route, Link} from 'react-router-dom';
+import { Route, Link, Switch} from 'react-router-dom';
+
+const getFullPage = (match,newsData ) => {
+
+}
 
 export default function NewsList(props) {
-  const newsList = props.news.map((news,index) => (
+debugger;
+const main = props.newsData.map( (news,index) => (
     <div key={`newsItemDiv-${news.id}`}>
-      <Link to={`${props.match.url}/${index}`}><NewsDetail story={news}/></Link>
-      <Route path={`${props.match.url}/:id`} render={(match) => <NewsFull match={match}
-                                                                        story={news}/>} />
+      <Link to={`${props.match.url}/${index}`}> <NewsDetail story={news}/> </Link>
     </div>
-  ))
+))
 
   return (
     <div key="NewsList">
       <h2>News List</h2>
-      {newsList}
+      {main}
     </div>
   )
 }

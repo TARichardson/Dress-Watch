@@ -2,6 +2,14 @@ A readme that contains the following:
 * Introduction to your app
     * A man’s dress watch news/review site
 
+* Installation
+  * folk or clone git repo
+  * in dress-watch folder in the command line run 'bundle install'
+  * then in client folder run 'npm i' to install dependencies
+  * back in dress-watch run 'rails db:drop db:create db:migrate db:seed'
+  * next run 'rails start' to start the server and client
+  * open up a browser to 'localhost:3001'
+
 * Github
   * https://github.com/TARichardson/Dress-Watch
 
@@ -30,6 +38,8 @@ A readme that contains the following:
     * knock
     * jwt
     * pry-rail
+    * Moment
+    * react-moment
 
 * Feature list (aka user stories)
     * user starts on the Welcome page with enter button which links to the home page
@@ -121,11 +131,11 @@ A readme that contains the following:
     * user login/register
     * user can update profile
     * user can delete profile
-    * user can edit comments
     * view user profile
-    * user comment on articles
     * Auth
 * Post M.V.P features
+    * user can edit comments
+    * user comment on articles
     * user has a wishlist
     * reply to comments
     * user block user

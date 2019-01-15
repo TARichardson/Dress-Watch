@@ -15,19 +15,21 @@ import AuthForms from './components/AuthForms.jsx';
 import Profile   from './components/Profile.jsx';
 import About     from './components/About.jsx';
 import Credit    from './components/Credit.jsx';
+import NewsFull  from './components/NewsFull.jsx';
+
 // services
 import { login, create, getSelf, updateUser, deleteUser }
                  from './services/auth.jsx';
-import { createComments, updateComment, deleteComment }
-                 from './services/comments.jsx';
-import { createReplies, updateReply, deleteReply }
-                from './services/replies.jsx';
-import { createArticles, updateArticle, deleteArticle }
-                from './services/articles.jsx';
-import { createBrands, updateBrand, deleteBrand }
-                 from './services/brands.jsx';
-import { createProducts, updateProduct, deleteProduct }
-                from './services/products.jsx';
+// import { createComments, updateComment, deleteComment }
+//                  from './services/comments.jsx';
+// import { createReplies, updateReply, deleteReply }
+//                 from './services/replies.jsx';
+// import { createArticles, updateArticle, deleteArticle }
+//                 from './services/articles.jsx';
+// import { createBrands, updateBrand, deleteBrand }
+//                  from './services/brands.jsx';
+// import { createProducts, updateProduct, deleteProduct }
+//                 from './services/products.jsx';
 // style
 import './App.css';
 
@@ -434,8 +436,9 @@ toggle_userProfileData_edit = async (index) => {
                                                   latestReviewsData={this.state.latestReviewsData}
                                                   saveLatestProducts={this.saveLatestProducts}
                                                   latestProductsData={this.state.latestProductsData} />} />
-
-      <Route path="/news"     render={(match) => <News match={match}
+      <Route path={"/news/:id"} render={ (props) => <NewsFull {...props.match}
+                                                            story={this.state.newsData[props.match.params.id]}/> } />
+      <Route exact path="/news"     render={(match) => <News match={match}
                                                        saveNews={this.saveNews}
                                                        newsData={this.state.newsData} />} />
 
@@ -469,6 +472,7 @@ toggle_userProfileData_edit = async (index) => {
                                                           toggle_user_edit={this.toggle_user_edit} /> } />
       <Route path="/about" component={About} />
       <Route path="/credit" component={Credit} />
+
     </Switch>
 
     <Switch>

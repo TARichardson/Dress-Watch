@@ -1,5 +1,5 @@
 import React from 'react';
-import CommentDetail from 'CommentDetail.jsx';
+import CommentDetail from './CommentDetail.jsx';
 
 export default function CommentList(props) {
   const comments = props.comments
