@@ -3,9 +3,6 @@ import NewsDetail from './NewsDetail.jsx';
 import NewsFull from './NewsFull.jsx';
 import { Route, Link, Switch} from 'react-router-dom';
 
-const getFullPage = (match,newsData ) => {
-
-}
 
 export default function NewsList(props) {
 debugger;
