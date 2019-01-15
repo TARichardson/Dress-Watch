@@ -68,7 +68,6 @@ class ProductsController < ApplicationController
     end
 
     def get_image
-      #debugger;
         path = "#{Rails.root}/Resource/#{params[:id]}.jpg" # just a sample path to test
        send_file path, :content_type => 'image/jpg', :disposition => 'inline'
     end
