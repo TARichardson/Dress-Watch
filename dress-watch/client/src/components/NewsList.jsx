@@ -1,7 +1,6 @@
 import React from 'react';
 import NewsDetail from './NewsDetail.jsx';
-import NewsFull from './NewsFull.jsx';
-import { Route, Link, Switch} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
